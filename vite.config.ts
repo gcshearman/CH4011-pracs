@@ -8,5 +8,5 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] })
   ],
-  base: "/ch4011-pracs/",
+  base: "/CH4011-pracs/",
 })

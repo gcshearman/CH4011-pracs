@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Download, FlaskConical, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -8,6 +7,7 @@ import { motion } from "framer-motion";
 interface WorksheetShellProps {
   title: string;
   practicalType: string;
+  experimentNumber: number;
   completionPercentage: number;
   completedSections: number;
   totalSections: number;
@@ -18,6 +18,7 @@ interface WorksheetShellProps {
 export default function WorksheetShell({
   title,
   practicalType,
+  experimentNumber,
   completionPercentage,
   completedSections,
   totalSections,
@@ -27,7 +28,7 @@ export default function WorksheetShell({
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-slate-700 bg-slate-900 text-white shadow-lg">
+      <header className="sticky top-0 z-50 border-b border-cyan-900/30 bg-slate-900/85 backdrop-blur-md text-white shadow-sm">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-5 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
             <div className="rounded-2xl bg-cyan-500/20 p-3">
@@ -37,7 +38,9 @@ export default function WorksheetShell({
               <p className="text-sm uppercase tracking-[0.25em] text-cyan-300">
                 {practicalType}
               </p>
-              <h1 className="text-2xl font-bold md:text-3xl">{title}</h1>
+              <h1 className="text-2xl font-bold md:text-3xl tracking-tight">
+              Experiment {experimentNumber}
+              </h1>
             </div>
           </div>
 
@@ -51,13 +54,15 @@ export default function WorksheetShell({
             <Progress value={completionPercentage} className="h-3" />
           </div>
 
-          <Button
-            onClick={onExportPDF}
-            className="rounded-2xl bg-cyan-500 px-6 py-3 text-base font-semibold text-slate-950 hover:bg-cyan-400"
-          >
-            <Download className="mr-2 h-5 w-5" />
-            Export PDF
-          </Button>
+          {onExportPDF && (
+            <button
+              onClick={onExportPDF}
+              className="rounded-2xl bg-cyan-500 px-6 py-3 text-base font-semibold text-slate-950 hover:bg-cyan-400 transition"
+            >
+              <Download className="mr-2 inline h-5 w-5" />
+              Export PDF
+            </button>
+          )}
         </div>
       </header>
 
@@ -116,6 +121,15 @@ export default function WorksheetShell({
             transition={{ duration: 0.5 }}
             className="space-y-8"
           >
+            <div className="mb-8 border-b border-slate-200 pb-6">
+            <p className="text-sm uppercase tracking-[0.2em] text-slate-500">
+            {practicalType}
+            </p>
+
+            <h1 className="mt-2 text-3xl font-bold text-slate-900">
+            {title}
+          </h1>
+          </div>
             {children}
           </motion.div>
         </main>
